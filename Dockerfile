@@ -2,10 +2,10 @@ FROM cimg/base:2022.11-20.04
 
 LABEL maintainer="Community & Partner Engineering Team <community-partner@circleci.com>"
 
-# Java 11 is default
+# Java 17 is default
 RUN sudo apt-get update && sudo apt-get install -y \
 		ant \
-		openjdk-8-jdk \
+		openjdk-17-jdk \
 		openjdk-11-jdk \
 		ruby-full \
 	&& \
@@ -18,9 +18,9 @@ ENV M2_HOME /usr/local/apache-maven
 ENV MAVEN_OPTS -Xmx2048m
 ENV PATH $M2_HOME/bin:$PATH
 # Set JAVA_HOME (and related) environment variable. This will be set to our
-# default Java version of 11 but the user would need to reset it when changing
+# default Java version of 17 but the user would need to reset it when changing
 # JAVA versions.
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV JDK_HOME=${JAVA_HOME}
 ENV JRE_HOME=${JDK_HOME}
 ENV MAVEN_VERSION "3.8.6"
