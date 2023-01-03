@@ -23,11 +23,11 @@ ENV PATH $M2_HOME/bin:$PATH
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV JDK_HOME=${JAVA_HOME}
 ENV JRE_HOME=${JDK_HOME}
-ENV MAVEN_VERSION "3.8.6"
-RUN curl -sSL -o /tmp/maven.tar.gz http://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
-	sudo tar -xz -C /usr/local -f /tmp/maven.tar.gz && \
+ENV MAVEN_VERSION "3.8.7"
+RUN curl -sSL -o /tmp/maven.zip http://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.zip && \
+	sudo unzip /tmp/maven.zip -d /usr/local && \
 	sudo ln -sf /usr/local/apache-maven-${MAVEN_VERSION} /usr/local/apache-maven && \
-	rm -rf /tmp/maven.tar.gz && \
+	rm -rf /tmp/maven.zip && \
 	mkdir -p /home/circleci/.m2
 
 ENV GRADLE_VERSION "7.6"
