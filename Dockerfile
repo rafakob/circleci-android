@@ -6,7 +6,6 @@ LABEL maintainer="Community & Partner Engineering Team <community-partner@circle
 RUN sudo apt-get update && sudo apt-get install -y \
 		ant \
 		openjdk-17-jdk \
-		openjdk-11-jdk \
 		ruby-full \
 	&& \
 	sudo rm -rf /var/lib/apt/lists/* && \
@@ -57,13 +56,13 @@ RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "tools" && \
 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platform-tools" && \
 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;33.0.1"
 
-RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-33" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-32" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-31" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-30" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-29" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-28" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-27"
+RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-33"
+# 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-32" && \
+# 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-31" && \
+# 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-30" && \
+# 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-29" && \
+# 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-28" && \
+# 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-27"
 
 # Install some useful packages
 RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;android;m2repository" && \
@@ -73,9 +72,9 @@ RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;android;m2repository" && \
 
 # Install Google Cloud CLI
 # Latest gcloud version can be found here: https://cloud.google.com/sdk/docs/release-notes
-ENV GCLOUD_VERSION "412.0.0-0"
-RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
-	sudo add-apt-repository "deb https://packages.cloud.google.com/apt cloud-sdk main" && \
-	sudo apt-get update && sudo apt-get install -y google-cloud-sdk=${GCLOUD_VERSION} && \
-	sudo gcloud config set --installation component_manager/disable_update_check true && \
-	sudo gcloud config set disable_usage_reporting false
+# ENV GCLOUD_VERSION "412.0.0-0"
+# RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
+# 	sudo add-apt-repository "deb https://packages.cloud.google.com/apt cloud-sdk main" && \
+# 	sudo apt-get update && sudo apt-get install -y google-cloud-sdk=${GCLOUD_VERSION} && \
+# 	sudo gcloud config set --installation component_manager/disable_update_check true && \
+# 	sudo gcloud config set disable_usage_reporting false
