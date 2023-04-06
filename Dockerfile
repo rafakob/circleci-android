@@ -1,4 +1,4 @@
-FROM cimg/base:2022.11-20.04
+FROM cimg/base:2023.04
 
 LABEL maintainer="Community & Partner Engineering Team <community-partner@circleci.com>"
 
