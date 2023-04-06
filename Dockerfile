@@ -22,14 +22,14 @@ ENV PATH $M2_HOME/bin:$PATH
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV JDK_HOME=${JAVA_HOME}
 ENV JRE_HOME=${JDK_HOME}
-ENV MAVEN_VERSION "3.8.7"
-RUN curl -sSL -o /tmp/maven.zip http://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.zip && \
-	sudo unzip /tmp/maven.zip -d /usr/local && \
+ENV MAVEN_VERSION=3.9.1
+RUN curl -sSL -o /tmp/maven.tar.gz http://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
+	sudo tar -xz -C /usr/local -f /tmp/maven.tar.gz && \
 	sudo ln -sf /usr/local/apache-maven-${MAVEN_VERSION} /usr/local/apache-maven && \
-	rm -rf /tmp/maven.zip && \
+	rm -rf /tmp/maven.tar.gz && \
 	mkdir -p /home/circleci/.m2
 
-ENV GRADLE_VERSION "7.6"
+ENV GRADLE_VERSION=8.0.2
 ENV PATH $PATH:/usr/local/gradle-${GRADLE_VERSION}/bin
 RUN URL=https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
 	curl -sSL -o /tmp/gradle.zip $URL && \
@@ -43,7 +43,7 @@ ENV CMDLINE_TOOLS_ROOT "${ANDROID_HOME}/cmdline-tools/latest/bin"
 ENV ADB_INSTALL_TIMEOUT 120
 ENV PATH "${ANDROID_HOME}/emulator:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/platform-tools/bin:${PATH}"
 # You can find the latest command line tools here: https://developer.android.com/studio#command-line-tools-only
-RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip" && \
+RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip" && \
 	mkdir -p ${ANDROID_HOME}/cmdline-tools && \
 	mkdir ${ANDROID_HOME}/platforms && \
 	mkdir ${ANDROID_HOME}/ndk && \
@@ -54,9 +54,10 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 
 RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "tools" && \
 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platform-tools" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;33.0.1"
+	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;34.0.0-rc2"
 
-RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-33"
+RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-UpsideDownCake" && \
+	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-33"
 # 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-32" && \
 # 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-31" && \
 # 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-30" && \
@@ -67,12 +68,12 @@ RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-33"
 # Install some useful packages
 RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;android;m2repository" && \
 	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;google;m2repository" && \
-	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;google;google_play_services" && \
-	sudo gem install fastlane --version 2.208.0 --no-document
+	echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;google;google_play_services"
+# 	sudo gem install fastlane --version 2.212.1 --no-document
 
-# Install Google Cloud CLI
-# Latest gcloud version can be found here: https://cloud.google.com/sdk/docs/release-notes
-# ENV GCLOUD_VERSION "412.0.0-0"
+# # Install Google Cloud CLI
+# # Latest gcloud version can be found here: https://cloud.google.com/sdk/docs/release-notes
+# ENV GCLOUD_VERSION=424.0.0-0
 # RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
 # 	sudo add-apt-repository "deb https://packages.cloud.google.com/apt cloud-sdk main" && \
 # 	sudo apt-get update && sudo apt-get install -y google-cloud-sdk=${GCLOUD_VERSION} && \
