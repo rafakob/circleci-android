@@ -30,11 +30,11 @@ RUN curl -sSL -o /tmp/maven.tar.gz http://apache.osuosl.org/maven/maven-3/${MAVE
 	mkdir -p /home/circleci/.m2
 
 # Gradle
-ENV GRADLE_VERSION=8.13
-ENV PATH=$PATH:/usr/local/gradle-${GRADLE_VERSION}/bin
-RUN curl -sSL -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
-	sudo unzip -d /usr/local /tmp/gradle.zip && \
-	rm -rf /tmp/gradle.zip
+# ENV GRADLE_VERSION=8.13
+# ENV PATH=$PATH:/usr/local/gradle-${GRADLE_VERSION}/bin
+# RUN curl -sSL -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip && \
+#	sudo unzip -d /usr/local /tmp/gradle.zip && \
+#	rm -rf /tmp/gradle.zip
 
 # Android SDK (only 35 and 36, no emulator)
 ENV ANDROID_HOME="/home/circleci/android-sdk"
