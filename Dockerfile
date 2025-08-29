@@ -2,10 +2,10 @@ FROM cimg/base:2024.02
 
 LABEL maintainer="CircleCI Execution Team <eng-execution@circleci.com>"
 
-# Java 17 only
+# Java 21 only
 RUN sudo apt-get update && sudo apt-get install -y \
 		ant \
-		openjdk-17-jdk \
+		openjdk-21-jdk \
 		ruby-full \
 	&& \
 	sudo rm -rf /var/lib/apt/lists/* && \
@@ -18,7 +18,7 @@ RUN sudo chmod -R a+w /var/lib/gems/ /usr/local/bin
 ENV M2_HOME=/usr/local/apache-maven
 ENV MAVEN_OPTS=-Xmx2048m
 ENV PATH=$M2_HOME/bin:$PATH
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 ENV JDK_HOME=${JAVA_HOME}
 ENV JRE_HOME=${JDK_HOME}
 ENV MAVEN_VERSION=3.9.9
