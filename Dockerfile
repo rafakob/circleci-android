@@ -42,6 +42,13 @@ ENV ANDROID_SDK_ROOT=$ANDROID_HOME
 ENV CMDLINE_TOOLS_ROOT="${ANDROID_HOME}/cmdline-tools/latest/bin"
 ENV PATH="${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/platform-tools/bin:${PATH}"
 
+RUN yes | ${CMDLINE_TOOLS_ROOT}/sdkmanager --licenses && \
+    echo "===== STABLE (channel 0) =====" && \
+    ${CMDLINE_TOOLS_ROOT}/sdkmanager --list | grep -E "build-tools;3[67]|platforms;android-3[67]" || echo "  (nothing in stable)" && \
+    echo "===== CANARY (channel 3) =====" && \
+    ${CMDLINE_TOOLS_ROOT}/sdkmanager --channel=3 --list | grep -E "build-tools;3[67]|platforms;android-3[67]" || echo "  (nothing in canary)"
+
+	
 RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" && \
 	mkdir -p ${ANDROID_HOME}/cmdline-tools && \
 	mkdir ${ANDROID_HOME}/platforms && \
@@ -51,12 +58,12 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 	rm /tmp/cmdline-tools.zip && \
 	mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest
 
-RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "tools" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platform-tools" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;36.0.0-rc5" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;37.0.0" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-36" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-37"
+RUN yes | ${CMDLINE_TOOLS_ROOT}/sdkmanager --licenses && \
+    ${CMDLINE_TOOLS_ROOT}/sdkmanager "platform-tools" && \
+    ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;36.0.0-rc5" && \
+    ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;37.0.0" && \
+    ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-36" && \
+    ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-37"
 
 # Optional extras (keep what you use)
 RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;android;m2repository" && \
