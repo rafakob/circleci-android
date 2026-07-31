@@ -36,7 +36,7 @@ RUN curl -sSL -o /tmp/maven.tar.gz http://apache.osuosl.org/maven/maven-3/${MAVE
 #	sudo unzip -d /usr/local /tmp/gradle.zip && \
 #	rm -rf /tmp/gradle.zip
 
-# Android SDK (only 35 and 36, no emulator)
+# Android SDK (36 and 37, no emulator)
 ENV ANDROID_HOME="/home/circleci/android-sdk"
 ENV ANDROID_SDK_ROOT=$ANDROID_HOME
 ENV CMDLINE_TOOLS_ROOT="${ANDROID_HOME}/cmdline-tools/latest/bin"
@@ -53,10 +53,10 @@ RUN SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-lin
 
 RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "tools" && \
     echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platform-tools" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;35.0.1" && \
     echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;36.0.0-rc5" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-35" && \
-    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-36"
+    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "build-tools;37.0.0" && \
+    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-36" && \
+    echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "platforms;android-37"
 
 # Optional extras (keep what you use)
 RUN echo y | ${CMDLINE_TOOLS_ROOT}/sdkmanager "extras;android;m2repository" && \
